@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Financial</title>
+        <link rel="stylesheet" href="demo.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    </head>
+
+    <body>
+      <style>
+      .card{
+      background-color: white;
+      border-radius: 35px;
+      padding: 10px;
+      margin: 10px;
+      display: flex;
+      flex-direction: column;
+      }
+      h1{color: black;
+      float: left;
+      padding-left: 50px;}
+      .page-title{
+      margin-top:70px;
+      }
+      body {
+      color: black;
+      text-align: center;
+      background-image: linear-gradient(90deg,rgb(145, 235, 249),rgb(201, 179, 251));
+      background-repeat: no-repeat;
+      background-size: cover;
+      font-family:'Helvetica';
+      }
+      table,tr {
+      border-radius: 25px;
+      width: 100%;
+      padding: 10px;
+      margin:10px;   
+      }
+      thead{
+      background-color: blueviolet;
+      color:white;
+      font-size: 1.5rem;
+      }
+      th,td{
+      padding: 20px;
+      margin:20px;
+      }
+      tr{
+      background-color:rgba( 255, 255, 255 ,0.55)
+      }
+
+      .box1,.box2{
+      color: white;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 500;
+      text-decoration: none;
+
+      }
+      .box1:hover , .box2:hover{
+      color: rgba( 255, 255, 255 ,0.7);
+
+
+      }
+      .box1 {
+      margin: 0 8px;
+      }
+      .navbar-list {
+      list-style: none;
+      padding-left: 0;
+      }
+      .navtop {
+      padding: .25rem .5rem;
+      background-image: linear-gradient(90deg,rgb(145, 235, 249),rgb(201, 179, 251));
+      position:fixed;
+      border:0;
+      top:0;
+      right:0;
+      left:0;
+      z-index: 1030;
+      justify-content: flex-start!important;
+      position:fixed;
+      }
+      nav{
+      display: flex;
+      justify-content: space-between;
+      background-image: linear-gradient(90deg,rgb(145, 235, 249),rgb(201, 179, 251));
+
+      }
+      .box1-separate::after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 1px;
+      }     
+      .table1{
+      display:flex;
+      justify-content: flex-end;
+
+      }
+      .wrapper{
+
+      width:100%;
+      height:100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      }
+      #wrapper-on{
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display:block;
+      }
+      #main{
+      height: 100%;
+      overflow: auto;
+      box-sizing: border-box;
+      display:block;
+      }
+      .container-fluid{
+      width:100%;
+      }
+
+      </style><!--style header,body-->
+      <style>
+      .bottom-cotent{
+      padding-bottom: 50px;
+      margin-bottom:40px ;
+      }
+      nav .logo {
+      display: flex;
+      align-items: center;
+      margin: 0 24px;
+      }
+      .logo .menu-icon {
+      color: white;
+      font-size: 24px;
+      margin-right: 14px;
+      cursor: pointer;
+      padding-left: 16px;
+      }
+      .logo .logo-name {
+      color: white;
+      font-size: 22px;
+      font-weight: 500;
+      }
+      .sidebar {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      height: 100%;
+      width: 260px;
+      padding: 20px 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s ease;
+      overflow: auto;
+      }
+      nav.open .sidebar {
+      left: 0;
+      }
+      .sidebar .sidebar-content .bottom-content{
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 30px 16px;
+      }
+      .sidebar-content .list {
+      list-style: none;
+      }
+      .list .nav-link {
+      display: flex;
+      align-items: center;
+      margin: 8px 0;
+      padding: 14px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      }
+      .lists .nav-link:hover {
+      background-color: white;
+      }
+      .nav-link .icon {
+      margin-right: 14px;
+      font-size: 20px;
+      color: white;
+      }
+      .nav-link .link {
+      font-size: 16px;
+      color: white;
+      font-weight: 400;
+      }
+      .lists .nav-link:hover .icon,
+      .lists .nav-link:hover .link {
+      color: grey;
+      }
+      .overlay {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      height: 1000vh;
+      width: 200%;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s ease;
+      background: rgba(0, 0, 0, 0.3);
+      }
+      nav.open ~ .overlay {
+      opacity: 1;
+      left: 260px;
+      pointer-events: auto;
+      }
+
+      .content{
+      position:relative;
+      padding:50px;
+      }
+      ::-webkit-scrollbar {
+      background: hsla(0,0%,100%,.2);
+      position: absolute;
+      width: 2px;
+      }
+      ::-webkit-scrollbar-thumb {
+      background-color: #bcbcbd;
+      }
+      .containerbig{
+      background:rgb(239, 241, 253);
+      width:100%;
+      border-radius: 35px;
+      }
+
+      </style><!--style sidebar--> 
+      <style>
+      .survey{
+      padding: 10px;
+      margin: 10px;
+      }
+      .estimated{
+      flex:0 0 auto;
+      width:66.67%;
+      background-color: white;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 35px;
+      }
+      .content-esti-box{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      }
+      .estibox{
+      width:200px;
+      }
+      .total{
+      flex:0 0 auto;
+      width:33.33%;
+      background-color: white;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 35px;
+      }
+      .finan-content{
+      display: flex;
+      flex-direction: column;
+      width:100%;
+      }
+      .eanrings-boxes{
+      display: flex;
+      flex-direction: row;
+      padding: 10px;
+      margin: 10px;
+      }
+      .payments{
+      padding: 10px;
+      margin: 10px;
+      }
+      .container{
+      background-color: white;
+      border-radius: 35px;
+      }
+      .table-fix,.eanrings-boxes{
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      }
+
+      </style><!--style content--> 
+              <div id="wrapper-on">
+                    <div class="navtop">
+                        <nav>
+                          <div class="logo">
+                              <span class="logo-name">Overview</span>
+                              <i class="fa-solid fa-list menu-icon"></i>
+                          </div>
+                          <div class ="sidebar">
+                              <div class="logo">
+                                  <span class="logo-name">Overview</span>
+                                  <i class="fa-solid fa-list menu-icon"></i>
+                              </div>
+                              <div class="sidebar-content">
+                                  <ul class="lists">
+                                      <li class="list">
+                                        <a href="index.html" class="nav-link" target="_self">
+                                          
+                                          <span class="link">Home</span>
+                                        </a>
+                                      </li>
+                                      <li class="list">
+                                        <a href="patients.html" class="nav-link" target="_self">
+                                          
+                                          <span class="link">Patients</span>
+                                        </a>
+                                      </li>
+                                      <li class="list">
+                                        <a href="doctors.html" class="nav-link" target="_self">
+                                          
+                                          <span class="link">Doctors</span>
+                                        </a>
+                                      </li>
+                                      <li class="list">
+                                        <a href="messages.html" class="nav-link" target="_self">
+                                          
+                                          <span class="link">Messages</span>
+                                        </a>
+                                      </li>
+                                      <li class="list">
+                                        <a href="appointments.html" class="nav-link" target="_self">
+                                          
+                                          <span class="link">Appointments</span>
+                                        </a>
+                                      </li>
+                                      <li class="list">
+                                        <a href="departments.html" class="nav-link" target="_self">
+                                          
+                                          <span class="link">Departments</span>
+                                        </a>
+                                      </li>
+                                      <li class="list">
+                                        <a href="medspec.html" class="nav-link" target="_self">
+                                          
+                                          <span class="link">Medical Specialties</span>
+                                        </a>
+                                      </li>
+                                      <li class="list">
+                                        <a href="financial.html" class="nav-link" target="_self">
+                                          
+                                          <span class="link">Financial</span>
+                                        </a>
+                                      </li>
+                                      <li class="list">
+                                        <a href="pharmacy.html" class="nav-link" target="_self">
+                                          
+                                          <span class="link">Pharmacy</span>
+                                        </a>
+                                      </li>
+                                      <li class="list">
+                                        <a href="Inventory.html" class="nav-link" target="_self">
+                                          
+                                          <span class="link">Inventory</span>
+                                        </a>
+                                      </li>
+                                      <li class="list">
+                                        <a href="bloodbank.html" class="nav-link" target="_self">
+                                          
+                                          <span class="link">Blood Bank</span>
+                                        </a>
+                                      </li>
+                                  </ul>
+                                  <div class="bottom-cotent">
+                                      <li class="list">
+                                        <a href="#" class="nav-link">
+                                          
+                                          <span class="link">Settings</span>
+                                        </a>
+                                      </li>
+                                      <li class="list">
+                                        <a href="#" class="nav-link">
+                                          
+                                          <span class="link">Logout</span>
+                                        </a>
+                                      </li>
+                                  </div>
+                              </div>
+                          </div>
+                          <ul class="navbar-list">
+                              <li class="box1 box1-separate" ><a class="box2" href="#link" target="_blank" title="CONNECT">CONNECT</a></li>
+                              <li class="box1" ><a class="box2" href="login.html" target="_self">LOGIN</a></li>
+                          </ul>
+                          <ul class="navbar-list">
+                              <li class="box1" ><a class="box2" href="index.html" target="_blank" title="HOME">HOME</a></li>
+                              <li class="box1" ><a class="box2" href="#link" target="_blank" title="INTRODUCTION">INTRODUCTION</a></li>
+                              <li class="box1" ><a class="box2" href="#link" target="_blank" title="DESCRIPTION">DESCRIPTION</a></li>
+                              <li class="box1" ><a class="box2" href="livecharts.html" target="_blank" title="LIVECHARTS">LIVECHARTS</a></li>
+                          </ul>
+                        </nav>
+                    </div>
+                    <div id="main" class="wrapper">
+                        <div class="containerbig">
+                            <div class="page-title">
+                                <header class="page-header">
+                                    <h1>Financial</h1>
+                                </header>
+                            </div>
+                            <div class="finan-content">
+                                <div class="survey">
+                                    <div class="container">
+                                        <canvas id="myChart"></canvas>
+                                    </div>
+                                    <script>
+                                    let myChart = document.getElementById('myChart').getContext('2d');
+
+                                    // Global Options
+                                    Chart.defaults.global.defaultFontFamily = 'Lato';
+                                    Chart.defaults.global.defaultFontSize = 18;
+                                    Chart.defaults.global.defaultFontColor = '#777';
+
+                                    let massPopChart = new Chart(myChart, {
+                                    type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+                                    data:{
+                                        labels:['1', '2', '3', '4', '5', '6','7','8','9','10','11','12'],
+                                        datasets:[{
+                                            label:'2021',
+                                            data:[
+                                                20,39,49,32,65,75,35,97,46,65,35,45
+                                            ],                   
+                                            borderWidth:1,
+                                            backgroundColor:['rgba(255, 99, 132, 0.3)'],
+                                            borderColor:'red',
+                                            hoverBorderWidth:3,
+                                      
+                                        },{
+                                            label:'2022',
+                                            data:[
+                                                35,76,35,56,32,45,76,45,76,45,76,34
+                                            ],
+                                          
+                                            borderWidth:1,
+                                            borderColor:'green',
+                                            backgroundColor:['rgba(101,250,222,0.3)'],
+                                            hoverBorderWidth:3,
+                                      
+                                        }
+                                        ]
+                                    },
+                                    options:{
+                                        title:{
+                                            display:true,
+                                            text:'Income',
+                                            fontSize:25
+                                        },
+                                        legend:{
+                                            display:true,
+                                            position:'right',
+                                            labels:{
+                                                fontColor:'#000'
+                                            }
+                                        },
+                                        layout:{
+                                            padding:{
+                                                left:50,
+                                                right:0,
+                                                bottom:0,
+                                                top:0
+                                            }
+                                        },
+                                        tooltips:{
+                                            enabled:true
+                                        }
+                                    }
+                                    });
+                                    </script><!--chart script-->
+                                </div>
+                                <div class="eanrings-boxes">
+                                    <div class="estimated">
+                                        <div class="estimated-box">
+                                            <h3>Estimated earnings</h3>
+                                        </div>
+                                        <div class="content-esti-box">
+                                            <div class="estibox">
+                                                <div class="esti-type">
+                                                    <h5>Today so far</h5>
+                                                </div>
+                                                <div class="esti-money">
+                                                    <h2>$0.33</h2>
+                                                </div>
+                                            </div>
+                                            <div class="estibox">
+                                                <div class="esti-type">
+                                                    <h5>Yesterday</h5>
+                                                </div>
+                                                <div class="esti-money">
+                                                    <h2>$1.46</h2>
+                                                </div>
+                                            </div>
+                                            <div class="estibox">
+                                                <div class="esti-type">
+                                                    <h5>Last 7 days</h5>
+                                                </div>
+                                                <div class="esti-money">
+                                                    <h2>$7.89</h2>
+                                                </div>
+                                            </div>
+                                            <div class="estibox">
+                                                <div class="esti-type">
+                                                    <h5>This month</h5>
+                                                </div>
+                                                <div class="esti-money">
+                                                    <h2>$33.9</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="total">
+                                        <div class="total-box">
+                                            <h3>Total earnings</h3>
+                                        </div>
+                                        <div class="content-total-box">
+                                            <div class="totalbox">
+                                                <div class="total-type">
+                                                    <h5>This year</h5>
+                                                </div>
+                                                <div class="total-money">
+                                                    <h2>$90.7</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="payments">
+                                    <div class="card">
+                                        <div class="table-name">
+                                            <h2>Payments</h2>
+                                        </div>
+                                        <div class="table-fix">      
+                                            <table class="page-table">
+                                              <thead>
+                                                  <tr class="primary">
+                                                      <th>Bill No</th>
+                                                      <th>Patient</th>
+                                                      <th>Doctor</th>
+                                                      <th>Date</th>
+                                                      <th>Charger</th>
+                                                      <th>Tax</th>
+                                                      <th>Discount</th>
+                                                      <th>Total</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <tr>
+                                                      <td>1</td>
+                                                      <td><a href="#" target="_blank">Patient A</a></td>
+                                                      <td><div>Doctor A</div></td>
+                                                      <td><div>1st October,2022</div></td>
+                                                      <td><div>$155</div></td>
+                                                      <td><div>10%</div></td>
+                                                      <td><div>5%</div></td>
+                                                      <td><div>$150</div></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>2</td>
+                                                      <td><a href="#" target="_blank">Patient A</a></td>
+                                                      <td><div>Doctor A</div></td>
+                                                      <td><div>1st October,2022</div></td>
+                                                      <td><div>$155</div></td>
+                                                      <td><div>10%</div></td>
+                                                      <td><div>5%</div></td>
+                                                      <td><div>$150</div></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>3</td>
+                                                      <td><a href="#" target="_blank">Patient A</a></td>
+                                                      <td><div>Doctor A</div></td>
+                                                      <td><div>1st October,2022</div></td>
+                                                      <td><div>$155</div></td>
+                                                      <td><div>10%</div></td>
+                                                      <td><div>5%</div></td>
+                                                      <td><div>$150</div></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>4</td>
+                                                      <td><a href="#" target="_blank">Patient A</a></td>
+                                                      <td><div>Doctor A</div></td>
+                                                      <td><div>1st October,2022</div></td>
+                                                      <td><div>$155</div></td>
+                                                      <td><div>10%</div></td>
+                                                      <td><div>5%</div></td>
+                                                      <td><div>$150</div></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>5</td>
+                                                      <td><a href="#" target="_blank">Patient A</a></td>
+                                                      <td><div>Doctor A</div></td>
+                                                      <td><div>1st October,2022</div></td>
+                                                      <td><div>$155</div></td>
+                                                      <td><div>10%</div></td>
+                                                      <td><div>5%</div></td>
+                                                      <td><div>$150</div></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>6</td>
+                                                      <td><a href="#" target="_blank">Patient A</a></td>
+                                                      <td><div>Doctor A</div></td>
+                                                      <td><div>1st October,2022</div></td>
+                                                      <td><div>$155</div></td>
+                                                      <td><div>10%</div></td>
+                                                      <td><div>5%</div></td>
+                                                      <td><div>$150</div></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>7</td>
+                                                      <td><a href="#" target="_blank">Patient A</a></td>
+                                                      <td><div>Doctor A</div></td>
+                                                      <td><div>1st October,2022</div></td>
+                                                      <td><div>$155</div></td>
+                                                      <td><div>10%</div></td>
+                                                      <td><div>5%</div></td>
+                                                      <td><div>$150</div></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>8</td>
+                                                      <td><a href="#" target="_blank">Patient A</a></td>
+                                                      <td><div>Doctor A</div></td>
+                                                      <td><div>1st October,2022</div></td>
+                                                      <td><div>$155</div></td>
+                                                      <td><div>10%</div></td>
+                                                      <td><div>5%</div></td>
+                                                      <td><div>$150</div></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>9</td>
+                                                      <td><a href="#" target="_blank">Patient A</a></td>
+                                                      <td><div>Doctor A</div></td>
+                                                      <td><div>1st October,2022</div></td>
+                                                      <td><div>$155</div></td>
+                                                      <td><div>10%</div></td>
+                                                      <td><div>5%</div></td>
+                                                      <td><div>$150</div></td>
+                                                  </tr>
+                                              </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+ 
+      <section class="overlay"></section>
+      <script>
+      const navBar = document.querySelector("nav"),
+      menuBtns = document.querySelectorAll(".menu-icon"),
+      overlay = document.querySelector(".overlay");
+
+      menuBtns.forEach((menuBtn) => {
+      menuBtn.addEventListener("click", () => {
+      navBar.classList.toggle("open");
+      });
+      });
+
+      overlay.addEventListener("click", () => {
+      navBar.classList.remove("open");
+      });
+      </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script>
+      <script src="demo.js"></script>
+      <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyAgpuJ8TXCu7-X8Iszljfs0oTzCikUeQqQ",
+        authDomain: "dataios-243a7.firebaseapp.com",
+        databaseURL: "https://dataios-243a7-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "dataios-243a7",
+        storageBucket: "dataios-243a7.appspot.com",
+        messagingSenderId: "60868227868",
+        appId: "1:60868227868:web:b0d9852cb89cd8c293c0d9",
+        measurementId: "G-CKD1R7GTPX"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      </script>
+
+    </body>
+    <footer>Biomedical engineering &copy; 2022</footer>
+
+</html>
